@@ -1,0 +1,61 @@
+<!doctype html>
+<http lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Password Generator</title>
+  <style>
+    body {
+      text-align: center;
+     }
+  </style>
+</head>
+<body>
+  <h1>パスワードジェネレーター</h1>
+  <p>
+    桁数：
+    <select id="keta">
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+    </select>
+  </p>
+  <p>記号を含める？
+    <input type="radio" name="hasSign" value="yes" checked="checked">Yes
+    <input type="radio" name="hassign" value="no">No
+  </p>
+  <button id="generateBtn">生成！</button>
+  <h2>生成結果</h2>
+  <textarea id="result" cols="40" rows="10"></textarea>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+    　$(function() {
+        $("#generateBtn").click( function(){
+          var password = "";
+          for (var i = 0; i < $("#keta").val(); i++) {
+            var value;
+            while (true) {
+              value = Math.floor(Math.random() * 122 +1);
+              // 0 - 9 (48 - 57), A - Z (65-90), a - z (97 - 122) 91- 96 は、記号
+              if (48 <= value && value <= 57) {
+                break;
+              } else if (65 <= value && value <= 90) {
+                break;
+              } else if (97 <= value && value <= 122) {
+                break;
+              } else if ($("input[name='hasSign']:checked").val() == "yes"
+               && (91 <= value && value <= 96)) {
+                break;
+              }
+            }
+            password += String.fromCharCode(value);
+          }
+          $("#result").text(password);
+        });
+    });
+
+    </script>
+
+</body>
+</http>

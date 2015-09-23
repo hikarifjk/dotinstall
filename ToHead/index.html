@@ -6,7 +6,11 @@
   <title>ToHead</title>
   <style>
     body { text-align: center; }
-    #back-to-top { position: absolute;}
+    #back-to-top {
+      position: fixed;
+      right: 5px;
+      bottom: 5px;
+    }
   </style>
 </head>
 <body>
@@ -30,9 +34,7 @@
   <p>hello!</p>
   <p>hello!</p>
   <p>hello!</p>
-  <div id="back-to-top">
-    <a href="#">↑</a>
-  </div>
+  <div id="back-to-top"><a href="#"><img src="back-to-top.gif"></a></div>
   <script>
   $(function() {
     // back-to-top を消す
@@ -41,16 +43,24 @@
     // スクロールが十分されたback-to-topを表示、スクロールが戻ったら非表示
     $(window).scroll(function() {
       var scrollTop = $(document).scrollTop();
-      if (50 < scrollTop) {
-        $("#back-to-top").css("top", scrollTop + 300);
-        $("#back-to-top").css("left", 500);
-        $("#back-to-top").show();
+      if (60 < scrollTop) {
+        // NOTE: 一度、表示されるのはいいが、その後、ずっとそのまま
+        // $("#back-to-top").css("top", $(window).innerHeight() - 0);
+        // $("#back-to-top").css("left", $(window).innerWidth() - 40);
+        $("#back-to-top").fadeIn();
       } else {
-        $("#back-to-top").hide();
+        $("#back-to-top").fadeOut();
       }
     });
 
     // #back-to-topがクリックされたら↑に戻る
+    $("#back-to-top a").click(function() {
+      $('body').animate({
+        scrollTop: 0
+      }, 500);
+      return false;
+
+    });
 
   });
 

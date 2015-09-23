@@ -6,6 +6,7 @@
   <title>ToHead</title>
   <style>
     body { text-align: center; }
+    #back-to-top { position: absolute;}
   </style>
 </head>
 <body>
@@ -35,8 +36,19 @@
   <script>
   $(function() {
     // back-to-top を消す
+    $("#back-to-top").hide();
 
     // スクロールが十分されたback-to-topを表示、スクロールが戻ったら非表示
+    $(window).scroll(function() {
+      var scrollTop = $(document).scrollTop();
+      if (50 < scrollTop) {
+        $("#back-to-top").css("top", scrollTop + 300);
+        $("#back-to-top").css("left", 500);
+        $("#back-to-top").show();
+      } else {
+        $("#back-to-top").hide();
+      }
+    });
 
     // #back-to-topがクリックされたら↑に戻る
 

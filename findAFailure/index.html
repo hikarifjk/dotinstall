@@ -12,33 +12,63 @@
 <body>
     <h1>間違いを見つけよう！</h1>
     <button id="startButton">start</button>
+    <p id='scoreArea'>
+
+    </p>
     <div id="questionArea">
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
     $(function(){
+        var questions = [["間", "問"], ["髙", "高"], ["臼", "白"]];
+        var level = 0;
+        var startDate;
+        var COLS_INIT = 5;
+        var COLS_DELTA = 3;
 
-        $("#startButton").click(function(){
+        var makeQuestion = function(level){
             $("#questionArea span").remove();
             $("#questionArea br").remove();
+            $("#scoreArea").text('');
 
             var id = "";
-            var cols = 5;
+            var cols = COLS_INIT + COLS_DELTA * level;
             var answerId = Math.floor(Math.random() * cols * cols);
             for (var i = 0; i < cols; i++) {
                 for (var j = 0; j < cols; j++) {
                     id = (i * cols) + j;
+                    var tag;
                     if (answerId == id) {
-                            $("#questionArea").append("<span id='rightValue'>間</span>");
-                            $("#rightValue").click(function(){
-                                alert("正解です！");
-                             });
+                        tag = '<span id="rightValue">' + questions[level][0] + "</span>";
                     } else {
-                        $("#questionArea").append("<span>問</span>");
+                        tag = "<span>" + questions[level][1] + "</span>";
                     }
+                    $("#questionArea").append(tag);
+
                 }
                 $("#questionArea").append("<br />");
             }
+            $("#rightValue").click(function(){
+                console.log("正解です！");
+                //alert("正解です！");
+                level++;
+                if (questions.length <= level) {
+                    // alert("全問クリア！");
+                    // var t2 = new Date();
+                    var msg = 'Your time is ' + ((new Date() - startDate) / 1000);
+                    $("#scoreArea").text(msg);
+
+                    level = 0;
+                } else {
+                    makeQuestion(level);
+                }
+            });
+        };
+
+        $("#startButton").click(function(){
+            level = 0;
+            startDate = new Date();
+            makeQuestion(level);
         });
     });
 

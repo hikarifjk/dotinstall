@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Slide Show</title>
+    <style>
+        body {
+            margin 10px auto;
+            text-align: center;
+        }
+        #main img {
+            width: 518px;
+            height: 388px;
+        }
+        .thumbnail {
+            width: 125px;
+            height: 83px;
+            cursor: pointer;
+        }
+        .thumbnail + .thumbnail {
+            margin-left: 4px;
+        }
+        .thumbnail.unselected {
+            opacity: 0.5;
+        }
+        .thumbnail.selected {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="thumbnails">
+    </div>
+    <div id="main">
+        <img />
+    </div>
+    <div id="operation">
+        <button id="toPrev"><<前へ</button>
+        <button id="toNext">次へ>></button>
+        <button id="play">再生</button>
+        <button id="stop">停止</button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var files = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg'];
+            var currentIndex = 0;
+
+            // 初期表示
+            for (var i = 0; i < files.length; i++) {
+                var img = $('<img>').attr('id', 'th' + i);
+                img.attr({'src':'img/' + files[i]});
+                img.addClass('thumbnail');
+                if (i == currentIndex) {
+                    img.addClass('selected');
+                    $('#main img').attr('src', img.attr('src'));
+
+                } else {
+                    img.addClass('unselected');
+                }
+                $('#thumbnails').append(img);
+
+            };
+
+            var changeImage = function(currentIndex){
+                $('#thumbnails').children().each(function(index){
+                    if (currentIndex == index) {
+                        $(this).removeClass('unselected');
+                        $(this).addClass('selected');
+                        $('#main img').attr('src', $(this).attr('src'));
+                    } else {
+                        $(this).removeClass('selected');
+                        $(this).addClass('unselected');
+                    }
+                });
+            };
+
+
+            $('.thumbnail').click(function(event){
+                currentIndex = $(this).index();
+                changeImage(currentIndex);
+            });
+
+            $('#toPrev').click(function(){
+                currentIndex--;
+                if (currentIndex < 0)  {
+                    currentIndex = files.length - 1;
+                }
+                changeImage(currentIndex);
+            });
+            $('#toNext').click(function(){
+                currentIndex++;
+                if (files.length <= currentIndex)  {
+                    currentIndex = 0;
+                }
+                changeImage(currentIndex);
+            });
+            var timer = null;
+            $('#play').click(function(){
+                if (!timer) {
+                    timer = setInterval(function(){
+                        currentIndex++;
+                        if (files.length <= currentIndex)  {
+                            currentIndex = 0;
+                        }
+                        changeImage(currentIndex);
+                    }, 1000);
+                }
+            });
+            $('#stop').click(function(){
+                clearInterval(timer);
+                timer = null;
+            });
+
+        });
+    </script>
+</body>
+</html>

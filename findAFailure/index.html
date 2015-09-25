@@ -49,12 +49,9 @@
                 $("#questionArea").append("<br />");
             }
             $("#rightValue").click(function(){
-                console.log("正解です！");
-                //alert("正解です！");
+                // console.log("正解です！");
                 level++;
                 if (questions.length <= level) {
-                    // alert("全問クリア！");
-                    // var t2 = new Date();
                     var msg = 'Your time is ' + ((new Date() - startDate) / 1000);
                     $("#scoreArea").text(msg);
 

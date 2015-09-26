@@ -10,8 +10,8 @@
 <body>
 <table>
   <thead>
-    <th id="name">名前</th>
-    <th id="point">点数</th>
+    <th id="name">名前<span　id="nameSort" /></th>
+    <th id="point">点数<span　id="pointSort" /></th>
   </thead>
   <tbody>
   </tbody>
@@ -62,6 +62,13 @@
       $('tbody').empty();
       sortByName(nameAsc);
       nameAsc = nameAsc ^ true;
+      if (nameAsc) {
+        $('#nameSort').val('▲');
+        console.log($('#nameSort'));
+      } else {
+        $('#nameSort').text('▼');
+      }
+
       showTable();
     });
     $('#point').click(function() {
@@ -70,7 +77,6 @@
       pointAsc = pointAsc ^ true;
       showTable();
     });
-    // sortByPoint(false);
     showTable();
   });
 </script>

@@ -4,46 +4,52 @@
     <meta charset="utf-8">
     <title>Parallax</title>
     <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 3000px;
+    }
+    /*
     #content {
         width: 4000px;
         height: 5000px;
     }
+    */
     .box {
-        width: 50px;
-        height: 50px;
-        position: absolute;
+        width: 40px;
+        height: 40px;
+        position: fixed;
+        top: 10px;
     }
     #redBox {
         left: 10px;
         background-color: red;
     }
     #blueBox {
-        left: 70px;
+        left: 60px;
         background-color: blue;
     }
     #greenBox {
-        left: 130px;
+        left: 110px;
         background-color: green;
     }
 
     </style>
 </head>
 <body>
-    <div id="content">
         <div class="box" id="redBox"></div>
         <div class="box" id="blueBox"></div>
         <div class="box" id="greenBox"></div>
-    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
         $(function() {
             $(window).scroll(function() {
-                $("#redBox").css('top', $(window).scrollTop() * 1.2 + 'px');
-                $("#redBox").css('left', $(window).scrollLeft() * 1.2 + 'px');
-                $("#blueBox").css('top', $(window).scrollTop() * 1.4 + 'px');
-                $("#blueBox").css('left', $(window).scrollLeft() * 1.4 + 'px');
-                $("#greenBox").css('top', $(window).scrollTop() * 1.7 + 'px');
-                $("#greenBox").css('left', $(window).scrollLeft() * 1.6 + 'px');
+                $("#redBox").css('top', $(window).scrollTop() / 2 + 10 + 'px');
+                //$("#redBox").css('left', $(window).scrollLeft() * 1.2 + 'px');
+                $("#blueBox").css('top', $(window).scrollTop() / 5 + 10 + 'px');
+                //$("#blueBox").css('left', $(window).scrollLeft() * 1.4 + 'px');
+                $("#greenBox").css('top', $(window).scrollTop() / 7 + 10 + 'px');
+                //$("#greenBox").css('left', $(window).scrollLeft() * 1.6 + 'px');
             });
         });
     </script>

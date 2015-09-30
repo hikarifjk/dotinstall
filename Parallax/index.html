@@ -8,13 +8,8 @@
       margin: 0;
       padding: 0;
       height: 3000px;
+      /* width: 3000px; */
     }
-    /*
-    #content {
-        width: 4000px;
-        height: 5000px;
-    }
-    */
     .box {
         width: 40px;
         height: 40px;
@@ -37,19 +32,29 @@
     </style>
 </head>
 <body>
-        <div class="box" id="redBox"></div>
-        <div class="box" id="blueBox"></div>
-        <div class="box" id="greenBox"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <div class="box" id="redBox"></div>
+      <div class="box" id="blueBox"></div>
+      <div class="box" id="greenBox"></div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <!--
+  <script src="./jquery.js"></script>
+-->
     <script>
         $(function() {
+          var posRed = $("#redBox").offset();
+          var posBlue = $("#blueBox").offset();
+          var posGreen = $("#greenBox").offset();
             $(window).scroll(function() {
-                $("#redBox").css('top', $(window).scrollTop() / 2 + 10 + 'px');
-                //$("#redBox").css('left', $(window).scrollLeft() * 1.2 + 'px');
-                $("#blueBox").css('top', $(window).scrollTop() / 5 + 10 + 'px');
-                //$("#blueBox").css('left', $(window).scrollLeft() * 1.4 + 'px');
-                $("#greenBox").css('top', $(window).scrollTop() / 7 + 10 + 'px');
-                //$("#greenBox").css('left', $(window).scrollLeft() * 1.6 + 'px');
+              var dy = $(this).scrollTop();
+
+                $("#redBox").css('top', posRed.top + (dy / 2));
+                $("#redBox").css('left', posRed.left + (dy / 8));
+                $("#redBox").css('width', 40 + dy * 0.2);
+                $("#blueBox").css('top', posBlue.top + (dy / 5));
+                $("#blueBox").css('left', posBlue.left + (dy / 2));
+                $("#greenBox").css('top', posGreen.top + (dy / 7));
+                $("#greenBox").css('left', posGreen.left + (dy / 4));
+
             });
         });
     </script>

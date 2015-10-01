@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Parallax2</title>
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 3000px;
+    }
+    .box {
+        margin: 0;
+        padding: 0;
+        width: 800px;
+        height: 400px;
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    #img1 {
+        background-image: url('img/1.jpeg');
+        top: 10px;
+    }
+    #img2 {
+        background-image: url('img/2.jpeg');
+        top: 410px;
+    }
+    #img3 {
+        background-image: url('img/3.jpeg');
+        top: 810px;
+    }
+    #img4 {
+        background-image: url('img/4.jpeg');
+        top: 1210px;
+    }
+    #img5 {
+        background-image: url('img/5.jpeg');
+        top: 1610px;
+    }
+    #msg {
+        top: 2010px;
+        color: orange;
+        font-size: 48px;
+        font-weight: bold;
+        font-family: Verdana Arial, sans-serif;
+        opacity: 1.0;
+    }
+
+    </style>
+</head>
+<body>
+      <div class="box" id="img1"></div>
+      <div class="box" id="img2"></div>
+      <div class="box" id="img3"></div>
+      <div class="box" id="img4"></div>
+      <div class="box" id="img5"></div>
+      <div class="box" id="msg">The End</div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script>
+        $(function() {
+            var posMsg = $("#msg").offset();
+            $(window).scroll(function() {
+                var dy = $(this).scrollTop();
+                console.log(dy);
+                if (dy < 410) {
+                    $("#img1").css('top', dy);
+                } else if (dy < 810) {
+                    $("#img2").css('top', dy);
+                } else if (dy < 1210) {
+                    $("#img3").css('top', dy);
+                } else if (dy < 1610) {
+                    $("#img4").css('top', dy);
+                    $("#msg").css('opacity', 1.0);
+                } else {
+                    $("#img5").css('top', dy*2);
+                    $("#msg").css('left', posMsg.left + dy / 5);
+                    $("#msg").css('opacity', $("#msg").css('opacity') - 0.01);
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

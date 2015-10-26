@@ -11,10 +11,28 @@ function draw() {
   }
   var ctx = canvas.getContext('2d') ;
 
+  ctx.fillStyle = "yellow";
+  ctx.save();
+
+  ctx.fillRect(0, 0, 50, 50);
+
+  ctx.fillStyle = "blue";
+  ctx.fillRect(100, 0, 50, 50);
+
+  ctx.restore();
+  ctx.fillRect(200, 0, 50, 50);
+
+
+
+
   var img = new Image();
   img.src = 'baby.jpg';
+  img.src = 'dotinstall.jpeg';
   img.onload = function() {
-    ctx.drawImage(img,160, 10);
+    var pattern = ctx.createPattern(img, 'repeat');
+    ctx.fillStyle = pattern;
+    ctx.fillRect(20, 20, 80, 80);
+    //ctx.drawImage(img,160, 10);
   }
 
 

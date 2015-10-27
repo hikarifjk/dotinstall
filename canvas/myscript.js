@@ -11,6 +11,39 @@ function draw() {
   }
   var ctx = canvas.getContext('2d') ;
 
+  ctx.fillStyle = "red";
+  var y = 0;
+
+  (function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (y > canvas.height) {
+      y = -50;
+    }
+    y++;
+    ctx.fillRect(0, y, 50, 50);
+    setTimeout(loop, 10);
+  })();
+
+/*
+  ctx.globalAlpha = 0.5;
+  for (var i = 0; i < 100; i++) {
+    var x = Math.floor(Math.random() * 400);
+    var y = Math.floor(Math.random() * 200);
+    var r = Math.floor(Math.random() * 200);
+
+    ctx.fillStyle = "rgb(" + rgb() + "," + rgb() + "," + rgb() +  ")";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+
+  }
+
+  function rgb() {
+    return Math.floor(Math.random() * 255);
+  }
+
+
   ctx.fillStyle = "yellow";
   ctx.save();
 
@@ -51,7 +84,7 @@ function draw() {
   ctx.lineCap = 'square';
   ctx.stroke();
 //  ctx.fill();
-
+*/
 /*
 
   ctx.moveTo(20, 60);

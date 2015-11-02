@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="components/loader.js"></script>
+    <script src="js/ncmb-2.0.0.min.js"></script>
+    <script>
+        $(function() {
+            var application_key = 'b40fd7b134f2293925b78966c5edfa4b0caa4d9fdcf433638deb02cb1008ad99';
+            var client_key = '59b159d6a12de5a7532a595a679042bad2e78fdf3911ef4fceac4441da2d1047';
+            var ncmb = new NCMB(application_key, client_key);
+            
+            var user = ncmb.User.getCurrentUser();
+            if (user !== null) {
+                location.href = './game.html';
+            }
+// ログイン・新規登録処理
+            $("form").on("submit", function() {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                
+                // ログイン
+                ncmb.User.login(username, password)
+                .then(function() {
+                    // ログイン成功
+                    // alert("ログイン成功");
+                    location.href = './game.html';
+                })
+                .catch(function() {
+                    // ログイン失敗
+                    var user = new ncmb.User({
+                        userName: username,
+                        password: password
+                    });
+                    // 新規登録
+                    user.signUpByAccount()
+                    .then(function() {
+                        // ログイン
+                        ncmb.User.login(username, password)
+                        .then(function() {
+                            // ログイン成功
+                            alert("新規登録&ログイン成功");
+                            location.href = './game.html';
+                        })
+                    });
+                })
+                return false;
+            });
+        });
+    </script>
+    <style>
+        body {
+            background-color: #BBDEFB;
+            padding-top: 20px;
+            font-family: Verdana, sans-serif;
+            
+        }
+        form {
+            margin: 30px auto;
+            text-align: center;
+        }
+        input {
+            border-radius: 5px;
+            padding: 7px;
+            margin-bottom: 10px;
+            width: 200px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+ 
+    <form>
+        <input type="text" id="username" placeholder="User name" />
+        <input type="password" id="password" placeholder="Password" />
+        <input type="submit" value="Register/Login" />
+    </form>
+ 
+</body>
+</html>

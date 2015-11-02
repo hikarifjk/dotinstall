@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="components/loader.js"></script>
+    <script src="js/ncmb-2.0.0.min.js"></script>
+    <script>
+        $(function() {
+            var application_key = 'b40fd7b134f2293925b78966c5edfa4b0caa4d9fdcf433638deb02cb1008ad99';
+            var client_key = '59b159d6a12de5a7532a595a679042bad2e78fdf3911ef4fceac4441da2d1047';
+            var ncmb = new NCMB(application_key, client_key);
+
+            var user = ncmb.User.getCurrentUser();
+
+            if (user === null) {
+                location.href = './index.html';
+
+            } else {
+                $('#username').text(user.userName + '(Log out)');
+            }
+
+            $('#username').on('click', function() {
+                ncmb.User.logout()
+                .then(function() {
+                    location.href = './index.html';
+                })
+            });
+
+            // canvas の設定
+            var canvas = document.getElementById('mycanvas');
+            var ctx = canvas.getContext('2d');
+
+            // 変数
+            var centerX = canvas.width / 2;
+            var centerY = canvas.height /2;
+            var r;
+            var timerId;
+            var isPlaying = false;
+            var target;
+            var score;
+
+            ctx.font = 'normal 28px Verdana';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#FFFFFF';
+
+            ctx.fillText('Stop at Target!', centerX, centerY);
+
+            // イベントの設定
+            $('#mycanvas').on('click', function() {
+              console.log(isPlaying);
+              if (isPlaying === true) {
+                // ゲームを止める
+                console.log(timerId);
+                score = 100 - Math.abs(target - r);
+                alert('target: ' + target + ' r: ' + r + ' score:' + score);
+                clearTimeout(timerId);
+              } else {
+                // ゲームを始める
+                r = 0;
+                target = Math.floor(Math.random() * 121) + 80;
+
+                drawCircle();
+              }
+              isPlaying = !isPlaying;
+            });
+            // 円を描く
+            function drawCircle() {
+              ctx.fillStyle = '#BBDEFB';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+              ctx.fillStyle = '#1976D2';
+              ctx.beginPath();
+              ctx.arc(centerX, centerY, r, 0, Math.PI * 2, false);
+              ctx.fill();
+
+              r++;
+              timerId = setTimeout(function() {
+                drawCircle();
+              }, 12);
+
+            }
+
+});
+    </script>
+    <style>
+        body {
+            background-color: #BBDEFB;
+            padding-top: 20px;
+            font-family: Verdana, sans-serif;
+            text-align: center;
+
+        }
+        #mycanvas {
+          margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+ <div id="username"></div>
+ <canvas id="mycanvas" width="300" height="300"></canvas>
+
+</body>
+</html>

@@ -41,19 +41,22 @@
             var isPlaying = false;
             var target;
             var score;
+            var Rank = ncmb.DataStore('Rank');
 
+            // スタート画面
             ctx.font = 'normal 28px Verdana';
             ctx.textAlign = 'center';
             ctx.fillStyle = '#FFFFFF';
+            showRanking();
 
             ctx.fillText('Stop at Target!', centerX, centerY);
 
             // イベントの設定
             $('#mycanvas').on('click', function() {
-              console.log(isPlaying);
+              // console.log(isPlaying);
               if (isPlaying === true) {
                 // ゲームを止める
-                console.log(timerId);
+                // console.log(timerId);
                 score = 100 - Math.abs(target - r);
                 // alert('target: ' + target + ' r: ' + r + ' score:' + score);
                 clearTimeout(timerId);
@@ -63,6 +66,19 @@
                 ctx.font = 'bold 35px Verdana';
                 ctx.fillText('Scope: ' + score, centerX, centerY + 50);
                 ctx.font = 'normal 28px Verdana';
+
+                // スコアの保存
+                var rank = new Rank;
+                rank.set('username', user.userName);
+                rank.set('score', score);
+                var acl = new ncmb.Acl();
+                acl.setPublicReadAccess(true);
+                acl.setUserWriteAccess(user, true);
+                rank.set('acl', acl);
+                rank.save()
+                .then(function() {
+                   showRanking();
+                });
 
               } else {
                 // ゲームを始める
@@ -93,8 +109,29 @@
               }, 12);
 
             }
+            function showRanking() {
+                Rank.limit(5)
+                    .order('score', true)
+                    .fetchAll()
+                    .then(function(ary) {
+                        $('ul').empty();
+                        $.each(ary, function(i, rank) {
+                            $('<li>').text(
+                                [
+                                    i + 1,
+                                    '位',
+                                    rank.get('username'),
+                                    'さん：',
+                                    rank.get('score'),
+                                    '点'
+                                ].join('')
+                            ).appendTo('ul');
+                        })
+                    })
 
-});
+            }
+
+        });
     </script>
     <style>
         body {
@@ -107,11 +144,30 @@
         #mycanvas {
           margin: 10px auto;
         }
+        h1 {
+            font-size: 25px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid #000;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding 0;
+        }
+
+        ul > li {
+            padding-bottom: 7px;
+            font-size: 18px;
+        }
+
     </style>
 </head>
 <body>
  <div id="username"></div>
  <canvas id="mycanvas" width="300" height="300"></canvas>
-
+ <h1>Ranking</h1>
+ <ul>
+ </ul>
 </body>
 </html>

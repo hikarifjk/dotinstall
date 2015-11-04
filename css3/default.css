@@ -30,3 +30,7 @@ div {
 #box4 {
   background: hsla(210, 100%, 40%, .7);
 }
+img {
+  border: 7px solid blue;
+  opacity: 0.3;
+}

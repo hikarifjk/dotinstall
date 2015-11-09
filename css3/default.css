@@ -2,6 +2,9 @@
 
 */
 
+
+
+
 html {
   font-size: 32px;
 }
@@ -33,4 +36,15 @@ div {
 img {
   border: 7px solid blue;
   opacity: 0.3;
+}
+
+/* a[href^="http"] { color: orange; } */
+/* a[href$=".com"] { color: orange; } */
+a[href*=".co.jp"] { color: orange; }
+
+/* li:nth-child(3) */
+/* li:only-child */
+li:nth-child(odd)
+{
+  background: violet;
 }

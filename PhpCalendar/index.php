@@ -10,7 +10,10 @@
     <tbody>
       <tr class="eddge">
         <td><<</td>
-        <td colspan="5">Nov 2015</td>
+        <td colspan="5"><?php
+          $date = new DateTime();
+          echo $date->format('M Y');
+          ?></td>
         <td>>></td>
       </tr>
       <tr>
@@ -23,6 +26,12 @@
         <td>Sat</td>
       </tr>
       <tr>
+        <?php for ($j = 0; $j < 7; $j++) : ?>
+          <td>
+            <?= $j + 1 ?>
+          </td>
+        <?php endfor; ?>
+        <!--
         <td class="sun">1</td>
         <td>2</td>
         <td>3</td>
@@ -30,6 +39,7 @@
         <td>5</td>
         <td>6</td>
         <td class="sat">7</td>
+-->
       </tr>
       <tr>
         <td class="sun">8</td>

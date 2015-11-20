@@ -25,49 +25,22 @@
         <td>Fri</td>
         <td>Sat</td>
       </tr>
-      <tr>
-        <?php for ($j = 0; $j < 7; $j++) : ?>
-          <td>
-            <?= $j + 1 ?>
-          </td>
+      <?php $j = 0; ?>
+      <?php for ($i = 0; $i < 5; $i++) : ?>
+        <tr>
+        <?php for (; $j < 28; $j++) : ?>
+            <?php if (($j + 1) % 7 == 1): ?>
+                <td class="sun"><?= $j + 1 ?></td>
+            <?php elseif (($j + 1) % 7 == 0): ?>
+                <td class="sat"><?= $j + 1 ?></td>
+                <?php $j += 1; break; ?>
+
+            <?php else: ?>
+                <td><?= $j + 1 ?></td>
+            <?php endif; ?>
         <?php endfor; ?>
-        <!--
-        <td class="sun">1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-        <td>6</td>
-        <td class="sat">7</td>
--->
-      </tr>
-      <tr>
-        <td class="sun">8</td>
-        <td>9</td>
-        <td>10</td>
-        <td>11</td>
-        <td>12</td>
-        <td>13</td>
-        <td class="sat">14</td>
-      </tr>
-      <tr>
-        <td class="sun">15</td>
-        <td>16</td>
-        <td>17</td>
-        <td>18</td>
-        <td>19</td>
-        <td>20</td>
-        <td class="sat">21</td>
-      </tr>
-      <tr>
-        <td class="sun">22</td>
-        <td>23</td>
-        <td>24</td>
-        <td>25</td>
-        <td>26</td>
-        <td>27</td>
-        <td class="sat">28</td>
-      </tr>
+        </tr>
+      <?php endfor; ?>
       <tr>
         <td class="sun">29</td>
         <td>30</td>

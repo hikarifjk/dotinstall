@@ -1,5 +1,23 @@
+<?php
+$body = '';
+$period = new DatePeriod(
+  new DateTime('first day of this month'),
+  new DateInterval('P1D'),
+  new DateTime('first day of next month')
+);
+
+foreach ($period as $day) {
+  if ($day->format('w') % 7 === 0) {
+    $body .= '</tr><tr>';
+  }
+
+  $body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $day->format('d'));
+}
+?>
+
+
 <!doctype html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="utf-8">
   <title>Calendar</title>
@@ -7,15 +25,24 @@
 </head>
 <body>
   <table>
-    <tbody>
+    <thead>
+
       <tr class="eddge">
-        <td><<</td>
+        <td>
+          <a href="" onClick="alert('前');">
+          &laquo;</a>
+        </td>
         <td colspan="5"><?php
           $date = new DateTime();
           echo $date->format('M Y');
           ?></td>
-        <td>>></td>
+        <td>
+          <a href="" onClick="alert('次');">
+          &raquo;</a>
+        </td>
       </tr>
+    </thead>
+      <tbody>
       <tr>
         <td>Sun</td>
         <td>Mon</td>
@@ -25,41 +52,8 @@
         <td>Fri</td>
         <td>Sat</td>
       </tr>
-      <?php
-        $j = 0;
-        $calendarItemList = array(
-          1, 2, 3, 4, 5, 6, 7,
-          8, 9, 10, 11, 12, 13, 14,
-          15, 16, 17, 18, 19, 20, 21,
-          22, 23, 24, 25, 26, 27, 28,
-          29, 30, 1, 2, 3, 4, 5,
-        );
-       ?>
-      <?php for ($i = 0; $i < 5; $i++) : ?>
-        <tr>
-        <?php for (; $j < 28; $j++) : ?>
-            <?php if (($j + 1) % 7 == 1): ?>
-                <td class="sun"><?= $calendarItemList[$j] ?></td>
-            <?php elseif (($j + 1) % 7 == 0): ?>
-                <td class="sat"><?= $calendarItemList[$j] ?></td>
-                <?php $j += 1; break; ?>
-
-            <?php else: ?>
-                <td><?= $calendarItemList[$j] ?></td>
-            <?php endif; ?>
-        <?php endfor; ?>
-        </tr>
-      <?php endfor; ?>
-      <tr>
-        <td class="sun">29</td>
-        <td>30</td>
-        <td class="otherMonth">1</td>
-        <td class="otherMonth">2</td>
-        <td class="otherMonth">3</td>
-        <td class="otherMonth">4</td>
-        <td class="sat otherMonth">5</td>
-      </tr>
-      <tr class="eddge">
+      <?php echo $body; ?>
+      <tr class="today">
         <td colspan="7">Today</td>
       </tr>
 

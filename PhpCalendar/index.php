@@ -1,5 +1,10 @@
 <?php
 
+function h($s) {
+  return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+}
+
+
 try {
   if (!isset($_GET['t']) || !preg_match('/\A\d{4}-\d{2}\z/', $_GET['t'])) {
       throw new Exception();
@@ -8,12 +13,12 @@ try {
 } catch (Exception $e) {
   $thisMonth = new DateTime('first day of this month');
 }
-// var_dump($thisMonth);
-// exit;
 
+$dt = clone $thisMonth;
+$prev = $dt->modify('-1 month')->format('Y-m');
+$dt = clone $thisMonth;
+$next = $dt->modify('+1 month')->format('Y-m');
 
-// $t = '2015-08';
-// $thisMonth = new DateTime($t);
 $yearMonth = $thisMonth->format('F Y');
 
 $tail = '';
@@ -31,11 +36,13 @@ $period = new DatePeriod(
   new DateTime('first day of ' . $yearMonth . ' +1 month')
 );
 
+$today = new DateTime('today');
 foreach ($period as $day) {
   if ($day->format('w') % 7 === 0) {
     $body .= '</tr><tr>';
   }
-  $body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $day->format('d'));
+  $todayClass = ($day->format('Y-m-d') === $today->format('Y-m-d')) ? 'today' : '';
+  $body .= sprintf('<td class="youbi_%d">%d</td>', $day->format('w'), $todayClass, $day->format('d'));
 }
 
 $firstDayOfNextMonth = new DateTime('first day of ' . $yearMonth . ' +1 month');
@@ -60,18 +67,17 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
   <table>
     <thead>
 
-      <tr class="eddge">
-        <td>
-          <a href="" onClick="alert('前');">
-          &laquo;</a>
-        </td>
-        <td colspan="5"><?php
-          echo $yearMonth;
-          ?></td>
-        <td>
-          <a href="" onClick="alert('次');">
+      <tr>
+        <th>
+          <a href="/?t=<?php echo h($prev); ?>">&laquo;</a>
+        </th>
+        <th colspan="5"><?php
+          echo h($yearMonth);
+          ?></th>
+        <th>
+          <a href="/?t=<?php echo h($next); ?>">
           &raquo;</a>
-        </td>
+        </th>
       </tr>
     </thead>
       <tbody>
@@ -85,11 +91,13 @@ $html = '<tr>' . $tail . $body . $head . '</tr>';
         <td>Sat</td>
       </tr>
       <?php echo $html; ?>
-      <tr class="today">
-        <td colspan="7">Today</td>
-      </tr>
-
     </tbody>
+    <tfoot>
+      <tr class="today">
+        <th colspan="7"><a href="/">Today</a></th>
+      </tr>
+    </tfoot>
+
   </table>
 </body>
 </html>

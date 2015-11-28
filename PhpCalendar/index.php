@@ -6,7 +6,11 @@ function h($s) {
   return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 }
 
+<<<<<<< HEAD
 $col = new \MyApp\Calendar();
+=======
+$cal = new \MyApp\Calendar();
+>>>>>>> 78b17cad9179a27f6ef956fadb2f74b412c695f5
 
 ?>
 
@@ -23,6 +27,7 @@ $col = new \MyApp\Calendar();
     <thead>
       <tr>
         <th>
+<<<<<<< HEAD
           <a href="/?t=<?php echo h($cal->$prev); ?>">&laquo;</a>
         </th>
         <th colspan="5"><?php
@@ -30,6 +35,15 @@ $col = new \MyApp\Calendar();
           ?></th>
         <th>
           <a href="/?t=<?php echo h($cal->$next); ?>">
+=======
+          <a href="?t=<?php echo h($cal->prev); ?>">&laquo;</a>
+        </th>
+        <th colspan="5"><?php
+          echo h($cal->yearMonth);
+          ?></th>
+        <th>
+          <a href="?t=<?php echo h($cal->next); ?>">
+>>>>>>> 78b17cad9179a27f6ef956fadb2f74b412c695f5
           &raquo;</a>
         </th>
       </tr>
@@ -48,7 +62,7 @@ $col = new \MyApp\Calendar();
     </tbody>
     <tfoot>
       <tr class="today">
-        <th colspan="7"><a href="/">Today</a></th>
+        <th colspan="7"><a href="?t=<?php echo h($cal->yearMonth); ?>">Today</a></th>
       </tr>
     </tfoot>
 

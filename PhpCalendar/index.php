@@ -1,5 +1,22 @@
+<?php
+
+require 'Calendar.php';
+
+function h($s) {
+  return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+}
+
+<<<<<<< HEAD
+$col = new \MyApp\Calendar();
+=======
+$cal = new \MyApp\Calendar();
+>>>>>>> 78b17cad9179a27f6ef956fadb2f74b412c695f5
+
+?>
+
+
 <!doctype html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="utf-8">
   <title>Calendar</title>
@@ -7,15 +24,31 @@
 </head>
 <body>
   <table>
-    <tbody>
-      <tr class="eddge">
-        <td><<</td>
-        <td colspan="5"><?php
-          $date = new DateTime();
-          echo $date->format('M Y');
-          ?></td>
-        <td>>></td>
+    <thead>
+      <tr>
+        <th>
+<<<<<<< HEAD
+          <a href="/?t=<?php echo h($cal->$prev); ?>">&laquo;</a>
+        </th>
+        <th colspan="5"><?php
+          echo h($cal->$yearMonth);
+          ?></th>
+        <th>
+          <a href="/?t=<?php echo h($cal->$next); ?>">
+=======
+          <a href="?t=<?php echo h($cal->prev); ?>">&laquo;</a>
+        </th>
+        <th colspan="5"><?php
+          echo h($cal->yearMonth);
+          ?></th>
+        <th>
+          <a href="?t=<?php echo h($cal->next); ?>">
+>>>>>>> 78b17cad9179a27f6ef956fadb2f74b412c695f5
+          &raquo;</a>
+        </th>
       </tr>
+    </thead>
+      <tbody>
       <tr>
         <td>Sun</td>
         <td>Mon</td>
@@ -25,36 +58,14 @@
         <td>Fri</td>
         <td>Sat</td>
       </tr>
-      <?php $j = 0; ?>
-      <?php for ($i = 0; $i < 5; $i++) : ?>
-        <tr>
-        <?php for (; $j < 28; $j++) : ?>
-            <?php if (($j + 1) % 7 == 1): ?>
-                <td class="sun"><?= $j + 1 ?></td>
-            <?php elseif (($j + 1) % 7 == 0): ?>
-                <td class="sat"><?= $j + 1 ?></td>
-                <?php $j += 1; break; ?>
-
-            <?php else: ?>
-                <td><?= $j + 1 ?></td>
-            <?php endif; ?>
-        <?php endfor; ?>
-        </tr>
-      <?php endfor; ?>
-      <tr>
-        <td class="sun">29</td>
-        <td>30</td>
-        <td class="otherMonth">1</td>
-        <td class="otherMonth">2</td>
-        <td class="otherMonth">3</td>
-        <td class="otherMonth">4</td>
-        <td class="sat otherMonth">5</td>
-      </tr>
-      <tr class="eddge">
-        <td colspan="7">Today</td>
-      </tr>
-
+      <?php echo $cal->show(); ?>
     </tbody>
+    <tfoot>
+      <tr class="today">
+        <th colspan="7"><a href="?t=<?php echo h($cal->yearMonth); ?>">Today</a></th>
+      </tr>
+    </tfoot>
+
   </table>
 </body>
 </html>

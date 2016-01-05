@@ -1,31 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+a {
+  text-decoration: none;
+}
+
 table {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 15px auto;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+th {
+  background: #eee;
+}
+th, td {
+  padding: 7px;
   text-align: center;
-  font-size: 13px;
-  font-family: 'Arial'
-}
-td {
-  margin: auto;
 }
 
-
-
-table {
-  border: 2px #F2F2F2 solid;
-}
-
-.eddge {
-  background-color: #F2F2F2;
-  font-weight: bold;
-}
-
-.sun {
+.youbi_0 {
   color: red;
 }
-.sat {
+.youbi_6 {
   color: blue;
 }
-.otherMonth {
-  color: #E4E4E4;
+.today {
+  font-weight: bold;
+}
+.gray {
+  color: #dedede;
 }

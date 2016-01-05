@@ -17,9 +17,19 @@
         var options = {
             zoom: 15,
             center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            navigationControl: true,
+            mapTypeId: google.maps.MapTypeId.HYBRID
         };
         var map = new google.maps.Map(document.getElementById('map'), options);
+
+        google.maps.event.addListener(map, 'click', function(event){
+            var marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map
+            });
+        });
+
+
     </script>
 </body>
 </html>

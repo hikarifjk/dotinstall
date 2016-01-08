@@ -6,14 +6,53 @@
     <style>
         #map {
             width: 100%;
-            height: 100%;
+            height: 80%;
         }
     </style>
 </head>
 <body>
+    <p>住所: <input type='text' id='address' value=''><input type='button' value="表示" onclick="moveMap();"></p>
     <div id="map"></div>
     <script>
+        var latlng = new google.maps.LatLng(35.66, 139.69);
+        var options = {
+            zoom: 15,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById('map'), options);
 
+        // HTML5
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                map.setCenter(new google.maps.LatLng(position.cordes.latitude,
+                  position.cordes.longitude));
+            }, function() {
+                alert('現在地を取得できません！');
+            })
+        } else {
+            alert('対応していません');
+        }
+
+
+        function moveMap() {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'address': document.getElementById('address').value
+            }, function(result, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.panTo(result[0].geometry.location);
+                    var marker = new google.maps.Maker({
+                        position: result[0].geometry.location,
+                        map: map
+                    });
+                } else {
+                    alert('ERROR!');
+                }
+            });
+        }
+
+/*
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({
             // 'address': '東京都目黒区'
@@ -56,6 +95,7 @@
                 alert("エラーです！");
             }
         });
+        */
 /*
         var latlng = new google.maps.LatLng(35.66, 139.69);
         var options = {
